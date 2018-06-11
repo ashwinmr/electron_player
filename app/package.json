@@ -6,12 +6,12 @@
   "scripts": {
     "start": "electron .",
     "package": "electron-packager . --asar --overwrite=true --icon=assets/icons/main_icon.ico",
-	"dist": "electron-builder",
-	"pack": "electron-builder --dir"
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir"
   },
   "build": {
-        "icon": "assets/icons/main_icon.ico"
-    },
+    "icon": "assets/icons/main_icon.ico"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
@@ -19,5 +19,8 @@
     "electron": "^2.0.2",
     "electron-builder": "^20.15.1",
     "electron-packager": "^12.1.0"
+  },
+  "dependencies": {
+    "trash": "^4.3.0"
   }
 }
