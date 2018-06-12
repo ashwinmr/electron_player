@@ -94,9 +94,7 @@ class Audio_C {
 
     Load(file_path) {
         this.Elem.src = file_path
-        if (this.Playing) {
-            this.Play()
-        }
+        this.Play()
     }
 
     Play() {
@@ -117,17 +115,52 @@ class Audio_C {
         }
     }
 
+    Stop() {
+        this.Playing = false
+        this.Elem.currentTime = 0
+    }
+
+    Seek(direction, increment) {
+        direction = Math.sign(direction)
+
+        if (increment === undefined) {
+            increment = 2
+        }
+
+        let current_time = this.Elem.currentTime
+        let duration = this.Elem.duration
+
+        let new_time = current_time + direction * increment
+        if (new_time < 0) {
+            this.Elem.currentTime = 0
+        } else if (new_time > duration) {
+            this.Stop()
+        } else {
+            this.Elem.currentTime = new_time
+        }
+    }
+
 
 
 }
 var Audio = new Audio_C
 
-File.Open(path.join(__dirname, '../../test/test.mp3'))
-Audio.Play()
-
 // Handle main process events
+ipcRenderer.on("open", (e, file_path) => {
+    File.Open(file_path)
+})
 ipcRenderer.on("play_pause", (e) => {
     if (File.Opened) {
         Audio.Play_Pause()
+    }
+})
+ipcRenderer.on("seek_plus", (e) => {
+    if (File.Opened) {
+        Audio.Seek(+1)
+    }
+})
+ipcRenderer.on("seek_minus", (e) => {
+    if (File.Opened) {
+        Audio.Seek(-1)
     }
 })

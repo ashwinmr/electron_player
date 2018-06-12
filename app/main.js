@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, dialog } = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -21,23 +21,55 @@ app.on('ready', function createWindow() {
     const menu = Menu.buildFromTemplate([{
             label: 'File',
             submenu: [{
-                // Quit
-                label: 'Quit',
-                accelerator: 'ctrl+q',
-                click() {
-                    win.close()
-                }
-            }, ]
+                    // Open dialog
+                    label: 'Open',
+                    accelerator: 'Ctrl+o',
+                    click() {
+                        dialog.showOpenDialog({
+                                title: "Open",
+                            },
+                            (file_paths) => {
+                                if (file_paths !== undefined) {
+                                    win.webContents.send("open", file_paths[0])
+                                }
+                            }
+                        )
+                    }
+                },
+                {
+                    // Quit
+                    label: 'Quit',
+                    accelerator: 'ctrl+q',
+                    click() {
+                        win.close()
+                    }
+                },
+            ]
         },
         {
             label: 'Edit',
             submenu: [{
-                label: 'Play/Pause',
-                accelerator: 'Space',
-                click() {
-                    win.webContents.send('play_pause')
-                }
-            }, ]
+                    label: 'Play/Pause',
+                    accelerator: 'Space',
+                    click() {
+                        win.webContents.send('play_pause')
+                    }
+                },
+                {
+                    label: 'Seek+',
+                    accelerator: 'right',
+                    click() {
+                        win.webContents.send('seek_plus')
+                    }
+                },
+                {
+                    label: 'Seek-',
+                    accelerator: 'left',
+                    click() {
+                        win.webContents.send('seek_minus')
+                    }
+                },
+            ]
         },
         {
             label: 'Help',
