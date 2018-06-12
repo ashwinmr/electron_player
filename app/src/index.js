@@ -139,15 +139,18 @@ class Audio_C {
             this.Elem.currentTime = new_time
         }
     }
-
-
-
 }
 var Audio = new Audio_C
 
 // Handle main process events
 ipcRenderer.on("open", (e, file_path) => {
     File.Open(file_path)
+})
+ipcRenderer.on("next", (e) => {
+    File.Open(File.Get(+1))
+})
+ipcRenderer.on("previous", (e, file_path) => {
+    File.Open(File.Get(-1))
 })
 ipcRenderer.on("play_pause", (e) => {
     if (File.Opened) {

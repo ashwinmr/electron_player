@@ -69,6 +69,20 @@ app.on('ready', function createWindow() {
                         win.webContents.send('seek_minus')
                     }
                 },
+                {
+                    label: 'Next',
+                    accelerator: 'up',
+                    click() {
+                        win.webContents.send('next')
+                    }
+                },
+                {
+                    label: 'Previous',
+                    accelerator: 'down',
+                    click() {
+                        win.webContents.send('previous')
+                    }
+                }
             ]
         },
         {
