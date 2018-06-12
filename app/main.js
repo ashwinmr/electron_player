@@ -30,6 +30,16 @@ app.on('ready', function createWindow() {
             }, ]
         },
         {
+            label: 'Edit',
+            submenu: [{
+                label: 'Play/Pause',
+                accelerator: 'Space',
+                click() {
+                    win.webContents.send('play_pause')
+                }
+            }, ]
+        },
+        {
             label: 'Help',
             // Allow opening browser dev tool
             submenu: [{

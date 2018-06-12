@@ -89,18 +89,45 @@ class Audio_C {
             '.ogg',
             '.flac'
         ]
+        this.Playing = false
     }
 
     Load(file_path) {
         this.Elem.src = file_path
+        if (this.Playing) {
+            this.Play()
+        }
     }
 
     Play() {
         this.Elem.play()
+        this.Playing = true
     }
+
+    Pause() {
+        this.Elem.pause()
+        this.Playing = false
+    }
+
+    Play_Pause() {
+        if (this.Playing) {
+            this.Pause()
+        } else {
+            this.Play()
+        }
+    }
+
+
 
 }
 var Audio = new Audio_C
 
 File.Open(path.join(__dirname, '../../test/test.mp3'))
 Audio.Play()
+
+// Handle main process events
+ipcRenderer.on("play_pause", (e) => {
+    if (File.Opened) {
+        Audio.Play_Pause()
+    }
+})
