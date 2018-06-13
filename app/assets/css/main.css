@@ -7,3 +7,52 @@ body {
     margin: 0;
     background: linear-gradient(#fdfe00, #ffd500);
 }
+
+#btn_bar {
+    width: 50%;
+    user-select: none;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%);
+    white-space: nowrap;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+button {
+    user-select: inherit;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    height: 50px;
+    width: 50px;
+}
+
+button:hover {
+    filter: brightness(1.2)
+}
+
+button:active {
+    filter: brightness(0.9);
+}
+
+
+/* Set image for each button */
+
+#previous_btn {
+    background: url(../ui/previous_btn.svg);
+}
+
+#play_pause_btn {
+    background: url(../ui/play_btn.svg);
+    height: 80px;
+    width: 80px;
+}
+
+#next_btn {
+    background: url(../ui/next_btn.svg);
+}

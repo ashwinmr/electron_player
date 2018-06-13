@@ -98,13 +98,15 @@ class Audio_C {
     }
 
     Play() {
-        this.Elem.play()
         this.Playing = true
+        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/pause_btn.svg)')
+        this.Elem.play()
     }
 
     Pause() {
-        this.Elem.pause()
         this.Playing = false
+        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/play_btn.svg)')
+        this.Elem.pause()
     }
 
     Play_Pause() {
@@ -142,15 +144,36 @@ class Audio_C {
 }
 var Audio = new Audio_C
 
+// Add button shortcuts
+document.getElementById('previous_btn').addEventListener('click', (e) => {
+    if (File.Opened) {
+        File.Open(File.Get(-1))
+    }
+})
+document.getElementById('play_pause_btn').addEventListener('click', (e) => {
+    if (File.Opened) {
+        Audio.Play_Pause()
+    }
+})
+document.getElementById('next_btn').addEventListener('click', (e) => {
+    if (File.Opened) {
+        File.Open(File.Get(+1))
+    }
+})
+
 // Handle main process events
 ipcRenderer.on("open", (e, file_path) => {
     File.Open(file_path)
 })
 ipcRenderer.on("next", (e) => {
-    File.Open(File.Get(+1))
+    if (File.Opened) {
+        File.Open(File.Get(+1))
+    }
 })
 ipcRenderer.on("previous", (e, file_path) => {
-    File.Open(File.Get(-1))
+    if (File.Opened) {
+        File.Open(File.Get(-1))
+    }
 })
 ipcRenderer.on("play_pause", (e) => {
     if (File.Opened) {
