@@ -89,7 +89,10 @@ class Audio_C {
             '.ogg',
             '.flac'
         ]
-        this.Playing = false
+    }
+
+    get Playing() {
+        return !this.Elem.paused
     }
 
     Load(file_path) {
@@ -98,13 +101,11 @@ class Audio_C {
     }
 
     Play() {
-        this.Playing = true
         document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/pause_btn.svg)')
         this.Elem.play()
     }
 
     Pause() {
-        this.Playing = false
         document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/play_btn.svg)')
         this.Elem.pause()
     }
@@ -118,7 +119,7 @@ class Audio_C {
     }
 
     Stop() {
-        this.Playing = false
+        this.Pause()
         this.Elem.currentTime = 0
     }
 
