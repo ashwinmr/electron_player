@@ -28,8 +28,8 @@ button {
     cursor: pointer;
     border: none;
     outline: none;
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
 }
 
 button:hover {
@@ -43,16 +43,26 @@ button:active {
 
 /* Set image for each button */
 
+#shuffle_btn {
+    margin-right: 10%;
+    background: url(../ui/shuffle_btn.svg);
+}
+
 #previous_btn {
     background: url(../ui/previous_btn.svg);
 }
 
 #play_pause_btn {
     background: url(../ui/play_btn.svg);
-    height: 80px;
-    width: 80px;
+    height: 45px;
+    width: 45px;
 }
 
 #next_btn {
     background: url(../ui/next_btn.svg);
+}
+
+#loop_btn {
+    margin-left: 10%;
+    background: url(../ui/loop_btn.svg);
 }
