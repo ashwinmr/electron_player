@@ -95,6 +95,16 @@ class Audio_C {
         return !this.Elem.paused
     }
 
+    Loop() {
+        if (this.Elem.loop) {
+            this.Elem.loop = false;
+            document.getElementById('loop_btn').style.setProperty('filter', '');
+        } else {
+            this.Elem.loop = true;
+            document.getElementById('loop_btn').style.setProperty('filter', 'grayscale(100%) brightness(2.5)');
+        }
+    }
+
     Load(file_path) {
         this.Elem.src = file_path
         this.Play()
@@ -189,5 +199,15 @@ ipcRenderer.on("seek_plus", (e) => {
 ipcRenderer.on("seek_minus", (e) => {
     if (File.Opened) {
         Audio.Seek(-1)
+    }
+})
+ipcRenderer.on("shuffle", (e) => {
+    if (File.Opened) {
+        Audio.Shuffle()
+    }
+})
+ipcRenderer.on("loop", (e) => {
+    if (File.Opened) {
+        Audio.Loop()
     }
 })

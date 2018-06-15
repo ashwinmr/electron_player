@@ -82,6 +82,20 @@ app.on('ready', function createWindow() {
                     click() {
                         win.webContents.send('previous')
                     }
+                },
+                {
+                    label: 'Shuffle',
+                    accelerator: 's',
+                    click() {
+                        win.webContents.send('shuffle')
+                    }
+                },
+                {
+                    label: 'Loop',
+                    accelerator: 'l',
+                    click() {
+                        win.webContents.send('loop')
+                    }
                 }
             ]
         },

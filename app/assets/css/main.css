@@ -8,6 +8,12 @@ body {
     background: linear-gradient(#fdfe00, #ffd500);
 }
 
+#seek_bar {
+    width: 80%;
+    margin: auto;
+    padding-top: 10px;
+}
+
 #btn_bar {
     width: 50%;
     user-select: none;
