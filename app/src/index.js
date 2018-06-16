@@ -89,6 +89,9 @@ class Audio_C {
             '.ogg',
             '.flac'
         ]
+        this.Elem.addEventListener('timeupdate', () => {
+            Seek_Bar.Set(this.Elem.currentTime / this.Elem.duration * 100)
+        })
     }
 
     get Playing() {
@@ -133,6 +136,15 @@ class Audio_C {
         this.Elem.currentTime = 0
     }
 
+    Seek_Percent(percent) {
+        if (!File.Opened) {
+            return;
+        }
+        percent = percent < 0 ? 0 : percent >= 100 ? 0 : percent
+
+        this.Elem.currentTime = percent / 100 * this.Elem.duration
+    }
+
     Seek(direction, increment) {
         direction = Math.sign(direction)
 
@@ -142,18 +154,38 @@ class Audio_C {
 
         let current_time = this.Elem.currentTime
         let duration = this.Elem.duration
-
         let new_time = current_time + direction * increment
-        if (new_time < 0) {
-            this.Elem.currentTime = 0
-        } else if (new_time > duration) {
+
+        new_time = new_time < 0 ? 0 : new_time >= duration ? 0 : new_time
+
+        if (new_time === 0) {
             this.Stop()
         } else {
-            this.Elem.currentTime = new_time
+            this.Elem.currentTime = new_time;
         }
     }
 }
 var Audio = new Audio_C
+
+class Seek_Bar_C {
+
+    constructor() {
+        this.Elem = document.getElementById('seek_bar')
+        this.Set(0)
+        this.Elem.addEventListener('input', () => {
+            Audio.Seek_Percent(this.Elem.value)
+        })
+    }
+
+    Set(percent) {
+        // Limit val between 0 and 1
+        percent = percent < 0 ? 0 : percent > 100 ? 100 : percent
+        percent = Math.round(percent)
+        this.Elem.style.setProperty('background', 'linear-gradient(to right, red ' + percent + '%, black ' + percent + '%')
+        this.Elem.value = percent
+    }
+}
+var Seek_Bar = new Seek_Bar_C
 
 // Add button shortcuts
 document.getElementById('previous_btn').addEventListener('click', (e) => {
