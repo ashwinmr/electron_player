@@ -8,10 +8,33 @@ body {
     background: linear-gradient(#fdfe00, #ffd500);
 }
 
+#seek_bar_cnt {
+    text-align: center;
+}
+
 #seek_bar {
+    -webkit-appearance: none;
     width: 80%;
-    margin: auto;
-    padding-top: 10px;
+    height: 5px;
+    border-radius: 2px;
+    margin: 0;
+    background: linear-gradient(to right, red 0%, black 0%);
+    background-size: 200% 100%;
+    background-position: left bottom;
+    cursor: pointer;
+}
+
+#seek_bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background: url(../ui/seek_button.svg);
+    cursor: pointer;
+}
+
+#seek_bar:focus {
+    outline: none;
 }
 
 #btn_bar {
