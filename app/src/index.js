@@ -119,6 +119,7 @@ class Audio_C {
                     this.Stop()
                 }
             } else {
+                Time.Set(this.Elem.currentTime, this.Elem.duration)
                 Seek_Bar.Set(this.Elem.currentTime / this.Elem.duration * 100)
             }
         })
@@ -235,6 +236,24 @@ class Seek_Bar_C {
     }
 }
 var Seek_Bar = new Seek_Bar_C
+
+class Time_C {
+    constructor() {
+        this.Elem = document.getElementById('time')
+    }
+
+    Set(seconds, duration) {
+        let date = new Date(null)
+        date.setSeconds(seconds)
+        let time = date.toLocaleTimeString().substr(3, 5)
+        date = new Date(null)
+        date.setSeconds(duration)
+        duration = date.toLocaleTimeString().substr(3, 5)
+        this.Elem.innerHTML = time + '/' + duration
+        console.log(this.Elem)
+    }
+}
+var Time = new Time_C
 
 // Handle drag and drop
 document.addEventListener('dragover', (e) => {

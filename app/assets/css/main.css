@@ -47,6 +47,10 @@ body {
     outline: none;
 }
 
+#time {
+    font-size: 12px;
+}
+
 #btn_bar {
     width: 50%;
     user-select: none;
