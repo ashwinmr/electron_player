@@ -34,6 +34,10 @@ body {
     cursor: pointer;
 }
 
+#seek_bar::-webkit-slider-thumb:hover {
+    filter: brightness(2);
+}
+
 #seek_bar:focus {
     outline: none;
 }
@@ -72,6 +76,18 @@ button:hover {
 
 button:active {
     filter: grayscale(100%) brightness(1);
+}
+
+.toggled {
+    filter: grayscale(0) brightness(2.5);
+}
+
+.toggled:hover {
+    filter: grayscale(0) brightness(4);
+}
+
+.toggled:active {
+    filter: grayscale(0) brightness(1);
 }
 
 

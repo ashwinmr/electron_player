@@ -20,6 +20,7 @@ class File_C {
         this.Dir = path.dirname(file_path)
         this.Name = path.basename(file_path)
         this.Index = this.List.indexOf(this.Name)
+        this.Shuffling = false
 
         // Load the audio
         Audio.Load(file_path)
@@ -78,6 +79,19 @@ class File_C {
         }
         return path.join(dir, list[ind])
     }
+
+    Shuffle() {
+        if (!this.Opened) {
+            return
+        }
+        if (this.Shuffling) {
+            this.Shuffling = false;
+            document.getElementById('shuffle_btn').classList.remove('toggled');
+        } else {
+            this.Shuffling = true;
+            document.getElementById('shuffle_btn').classList.add('toggled');
+        }
+    }
 }
 var File = new File_C
 
@@ -120,10 +134,10 @@ class Audio_C {
         }
         if (this.Elem.loop) {
             this.Elem.loop = false;
-            document.getElementById('loop_btn').style.setProperty('filter', 'grayscale(100%) brightness(2.5)');
+            document.getElementById('loop_btn').classList.remove('toggled');
         } else {
             this.Elem.loop = true;
-            document.getElementById('loop_btn').style.setProperty('filter', '');
+            document.getElementById('loop_btn').classList.add('toggled');
         }
     }
 
@@ -132,7 +146,7 @@ class Audio_C {
             return
         }
         this.Elem.play()
-        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/pause_btn.svg)')
+        document.getElementById('play_pause_btn').style.setProperty('background-image', 'url(../assets/ui/pause_btn.svg)')
     }
 
     Pause() {
@@ -140,7 +154,7 @@ class Audio_C {
             return
         }
         this.Elem.pause()
-        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/play_btn.svg)')
+        document.getElementById('play_pause_btn').style.setProperty('background-image', 'url(../assets/ui/play_btn.svg)')
     }
 
     Play_Pause() {
@@ -214,6 +228,9 @@ class Seek_Bar_C {
 var Seek_Bar = new Seek_Bar_C
 
 // Add button shortcuts
+document.getElementById('shuffle_btn').addEventListener('click', (e) => {
+    File.Shuffle();
+})
 document.getElementById('previous_btn').addEventListener('click', (e) => {
     File.Open(File.Get(-1))
 })
