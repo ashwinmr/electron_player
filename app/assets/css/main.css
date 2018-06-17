@@ -64,7 +64,7 @@ body {
     align-items: center;
 }
 
-button {
+.nav_btn {
     background-position: center;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -79,11 +79,11 @@ button {
     margin: 0 10px 0 10px;
 }
 
-button:hover {
+.nav_btn:hover {
     filter: grayscale(100%) brightness(3);
 }
 
-button:active {
+.nav_btn:active {
     filter: grayscale(100%) brightness(1);
 }
 
