@@ -7,14 +7,14 @@
     </style>
     <radialGradient id="radial-gradient" cx="16.5" cy="16.5" r="16.5" gradientUnits="userSpaceOnUse">
       <stop offset="0"/>
-      <stop offset="0.43" stop-color="#020202"/>
-      <stop offset="0.58" stop-color="#090909"/>
-      <stop offset="0.69" stop-color="#141414"/>
-      <stop offset="0.78" stop-color="#252525"/>
-      <stop offset="0.86" stop-color="#3b3b3b"/>
-      <stop offset="0.92" stop-color="#575757"/>
-      <stop offset="0.98" stop-color="#767676"/>
-      <stop offset="1" stop-color="gray"/>
+      <stop offset="0.11" stop-color="#040000"/>
+      <stop offset="0.24" stop-color="#100"/>
+      <stop offset="0.37" stop-color="#270000"/>
+      <stop offset="0.5" stop-color="#460000"/>
+      <stop offset="0.63" stop-color="#6d0000"/>
+      <stop offset="0.77" stop-color="#9d0000"/>
+      <stop offset="0.91" stop-color="#d40000"/>
+      <stop offset="1" stop-color="red"/>
     </radialGradient>
   </defs>
   <title>seek_button</title>

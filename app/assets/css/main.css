@@ -31,11 +31,16 @@ body {
     width: 15px;
     border-radius: 50%;
     background: url(../ui/seek_button.svg);
+    filter: grayscale(100%) brightness(2.5);
     cursor: pointer;
 }
 
 #seek_bar::-webkit-slider-thumb:hover {
-    filter: brightness(2);
+    filter: grayscale(100%) brightness(3);
+}
+
+#seek_bar::-webkit-slider-thumb:active {
+    filter: grayscale(100%) brightness(1);
 }
 
 #seek_bar:focus {
