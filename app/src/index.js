@@ -9,6 +9,7 @@ class File_C {
 
     constructor() {
         this.Opened = false
+        this.Shuffling = false
     }
 
     // Open file and store data
@@ -20,7 +21,6 @@ class File_C {
         this.Dir = path.dirname(file_path)
         this.Name = path.basename(file_path)
         this.Index = this.List.indexOf(this.Name)
-        this.Shuffling = false
 
         // Load the audio
         Audio.Load(file_path)
@@ -44,7 +44,6 @@ class File_C {
         return file_list
     }
 
-
     Delete() {
         if (!this.Opened) {
             return
@@ -62,6 +61,10 @@ class File_C {
         // Return if a file has not been opened
         if (!this.Opened) {
             return
+        }
+        if (this.Shuffling) {
+            increment = Math.floor(Math.random() * this.List.length)
+            wrap = true
         }
         let list = this.List
         if (list.length < 1) {
