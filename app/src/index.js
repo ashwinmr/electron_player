@@ -27,18 +27,20 @@ class File_C {
 
     // Get the file path
     get Path() {
-        if (this.Opened) {
-            return path.join(this.Dir, this.Name)
+        if (!this.Opened) {
+            return
         }
+        return path.join(this.Dir, this.Name)
     }
 
     get List() {
-        if (this.Opened) {
-            let file_list = fs.readdirSync(this.Dir).filter((file) => {
-                return Audio.Format_List.includes(path.extname(file.toLowerCase()))
-            })
-            return file_list
+        if (!this.Opened) {
+            return
         }
+        let file_list = fs.readdirSync(this.Dir).filter((file) => {
+            return Audio.Format_List.includes(path.extname(file.toLowerCase()))
+        })
+        return file_list
     }
 
 
@@ -83,6 +85,7 @@ class Audio_C {
 
     constructor() {
         this.Elem = document.getElementById('audio')
+        this.Loaded = false
         this.Format_List = [
             '.mp3',
             '.wav',
@@ -90,40 +93,60 @@ class Audio_C {
             '.flac'
         ]
         this.Elem.addEventListener('timeupdate', () => {
-            Seek_Bar.Set(this.Elem.currentTime / this.Elem.duration * 100)
+            if (this.Elem.currentTime === this.Elem.duration) {
+                this.Stop()
+            } else {
+                Seek_Bar.Set(this.Elem.currentTime / this.Elem.duration * 100)
+            }
         })
     }
 
-    get Playing() {
-        return !this.Elem.paused
-    }
-
-    Loop() {
-        if (this.Elem.loop) {
-            this.Elem.loop = false;
-            document.getElementById('loop_btn').style.setProperty('filter', '');
-        } else {
-            this.Elem.loop = true;
-            document.getElementById('loop_btn').style.setProperty('filter', 'grayscale(100%) brightness(2.5)');
-        }
-    }
-
     Load(file_path) {
+        this.Loaded = true
         this.Elem.src = file_path
         this.Play()
     }
 
+    get Playing() {
+        if (!Audio.Loaded) {
+            return
+        }
+        return !this.Elem.paused
+    }
+
+    Loop() {
+        if (!Audio.Loaded) {
+            return
+        }
+        if (this.Elem.loop) {
+            this.Elem.loop = false;
+            document.getElementById('loop_btn').style.setProperty('filter', 'grayscale(100%) brightness(2.5)');
+        } else {
+            this.Elem.loop = true;
+            document.getElementById('loop_btn').style.setProperty('filter', '');
+        }
+    }
+
     Play() {
-        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/pause_btn.svg)')
+        if (!Audio.Loaded) {
+            return
+        }
         this.Elem.play()
+        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/pause_btn.svg)')
     }
 
     Pause() {
-        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/play_btn.svg)')
+        if (!Audio.Loaded) {
+            return
+        }
         this.Elem.pause()
+        document.getElementById('play_pause_btn').style.setProperty('background', 'url(../assets/ui/play_btn.svg)')
     }
 
     Play_Pause() {
+        if (!Audio.Loaded) {
+            return
+        }
         if (this.Playing) {
             this.Pause()
         } else {
@@ -132,20 +155,27 @@ class Audio_C {
     }
 
     Stop() {
+        if (!Audio.Loaded) {
+            return
+        }
         this.Pause()
         this.Elem.currentTime = 0
+        Seek_Bar.Set(0)
     }
 
     Seek_Percent(percent) {
-        if (!File.Opened) {
-            return;
+        if (!Audio.Loaded) {
+            return
         }
-        percent = percent < 0 ? 0 : percent >= 100 ? 0 : percent
+        percent = percent < 0 ? 0 : percent > 100 ? 100 : percent
 
         this.Elem.currentTime = percent / 100 * this.Elem.duration
     }
 
     Seek(direction, increment) {
+        if (!Audio.Loaded) {
+            return
+        }
         direction = Math.sign(direction)
 
         if (increment === undefined) {
@@ -156,13 +186,9 @@ class Audio_C {
         let duration = this.Elem.duration
         let new_time = current_time + direction * increment
 
-        new_time = new_time < 0 ? 0 : new_time >= duration ? 0 : new_time
+        new_time = new_time < 0 ? 0 : new_time > duration ? duration : new_time
 
-        if (new_time === 0) {
-            this.Stop()
-        } else {
-            this.Elem.currentTime = new_time;
-        }
+        this.Elem.currentTime = new_time;
     }
 }
 var Audio = new Audio_C
@@ -189,19 +215,16 @@ var Seek_Bar = new Seek_Bar_C
 
 // Add button shortcuts
 document.getElementById('previous_btn').addEventListener('click', (e) => {
-    if (File.Opened) {
-        File.Open(File.Get(-1))
-    }
+    File.Open(File.Get(-1))
 })
 document.getElementById('play_pause_btn').addEventListener('click', (e) => {
-    if (File.Opened) {
-        Audio.Play_Pause()
-    }
+    Audio.Play_Pause()
 })
 document.getElementById('next_btn').addEventListener('click', (e) => {
-    if (File.Opened) {
-        File.Open(File.Get(+1))
-    }
+    File.Open(File.Get(+1))
+})
+document.getElementById('loop_btn').addEventListener('click', (e) => {
+    Audio.Loop()
 })
 
 // Handle main process events
@@ -209,37 +232,23 @@ ipcRenderer.on("open", (e, file_path) => {
     File.Open(file_path)
 })
 ipcRenderer.on("next", (e) => {
-    if (File.Opened) {
-        File.Open(File.Get(+1))
-    }
+    File.Open(File.Get(+1))
 })
 ipcRenderer.on("previous", (e, file_path) => {
-    if (File.Opened) {
-        File.Open(File.Get(-1))
-    }
+    File.Open(File.Get(-1))
 })
 ipcRenderer.on("play_pause", (e) => {
-    if (File.Opened) {
-        Audio.Play_Pause()
-    }
+    Audio.Play_Pause()
 })
 ipcRenderer.on("seek_plus", (e) => {
-    if (File.Opened) {
-        Audio.Seek(+1)
-    }
+    Audio.Seek(+1)
 })
 ipcRenderer.on("seek_minus", (e) => {
-    if (File.Opened) {
-        Audio.Seek(-1)
-    }
+    Audio.Seek(-1)
 })
 ipcRenderer.on("shuffle", (e) => {
-    if (File.Opened) {
-        Audio.Shuffle()
-    }
+    Audio.Shuffle()
 })
 ipcRenderer.on("loop", (e) => {
-    if (File.Opened) {
-        Audio.Loop()
-    }
+    Audio.Loop()
 })
