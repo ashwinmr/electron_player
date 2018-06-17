@@ -100,6 +100,7 @@ class Audio_C {
     constructor() {
         this.Elem = document.getElementById('audio')
         this.Loaded = false
+        this.Looping = false
         this.Format_List = [
             '.mp3',
             '.wav',
@@ -108,7 +109,12 @@ class Audio_C {
         ]
         this.Elem.addEventListener('timeupdate', () => {
             if (this.Elem.currentTime === this.Elem.duration) {
-                this.Stop()
+                if (this.Looping) {
+                    this.Seek_Percent(0)
+                    this.Play()
+                } else {
+                    this.Stop()
+                }
             } else {
                 Seek_Bar.Set(this.Elem.currentTime / this.Elem.duration * 100)
             }
@@ -132,12 +138,12 @@ class Audio_C {
         if (!Audio.Loaded) {
             return
         }
-        if (this.Elem.loop) {
-            this.Elem.loop = false;
-            document.getElementById('loop_btn').classList.remove('toggled');
+        if (this.Looping) {
+            this.Looping = false
+            document.getElementById('loop_btn').classList.remove('toggled')
         } else {
-            this.Elem.loop = true;
-            document.getElementById('loop_btn').classList.add('toggled');
+            this.Looping = true
+            document.getElementById('loop_btn').classList.add('toggled')
         }
     }
 
