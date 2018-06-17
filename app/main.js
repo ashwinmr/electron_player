@@ -8,6 +8,7 @@ app.on('ready', function createWindow() {
     win = new BrowserWindow({
         show: false, // Show and maximize later
         icon: path.join(__dirname, 'assets', 'icons', 'main_icon.ico'),
+        resizable: false,
         width: 450,
         height: 150
     })

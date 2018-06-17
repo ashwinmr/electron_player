@@ -236,6 +236,18 @@ class Seek_Bar_C {
 }
 var Seek_Bar = new Seek_Bar_C
 
+// Handle drag and drop
+document.addEventListener('dragover', (e) => {
+    e.preventDefault();
+})
+document.addEventListener('drop', (e) => {
+    e.preventDefault();
+    let file = e.dataTransfer.files[0]
+    if (file !== undefined) {
+        File.Open(file.path)
+    }
+})
+
 // Add button shortcuts
 document.getElementById('shuffle_btn').addEventListener('click', (e) => {
     File.Shuffle();
@@ -273,7 +285,7 @@ ipcRenderer.on("seek_minus", (e) => {
     Audio.Seek(-1)
 })
 ipcRenderer.on("shuffle", (e) => {
-    Audio.Shuffle()
+    File.Shuffle()
 })
 ipcRenderer.on("loop", (e) => {
     Audio.Loop()
