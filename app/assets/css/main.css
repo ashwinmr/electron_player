@@ -100,6 +100,58 @@ body {
 }
 
 
+/* Set dropdown for speed */
+
+#speed {
+    position: relative;
+    display: inline-block;
+}
+
+#speed_btn {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 0;
+    flex-shrink: 0;
+    color: black;
+}
+
+#speed_btn::after {
+    content: 'x';
+}
+
+#speed_btn:hover {
+    color: red;
+}
+
+.dropdown_content {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    color: black;
+    width: 300%;
+    overflow: auto;
+    z-index: 1;
+}
+
+.dropdown_content li {
+    display: block;
+}
+
+.dropdown_content li::after {
+    content: 'x';
+}
+
+.dropdown_content li:hover {
+    color: red;
+}
+
+.show {
+    display: block;
+}
+
+
 /* Set image for each button */
 
 #shuffle_btn {

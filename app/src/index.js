@@ -214,6 +214,10 @@ class Audio_C {
 
         this.Elem.currentTime = new_time;
     }
+
+    Set_Speed(rate) {
+        this.Elem.plabackRate = Number(rate)
+    }
 }
 var Audio = new Audio_C
 
@@ -250,10 +254,31 @@ class Time_C {
         date.setSeconds(duration)
         duration = date.toLocaleTimeString().substr(3, 5)
         this.Elem.innerHTML = time + '/' + duration
-        console.log(this.Elem)
     }
 }
 var Time = new Time_C
+
+class Speed_C {
+    constructor() {
+        this.Button = document.getElementById('speed_btn')
+        this.List = document.getElementById('speed_list')
+        this.Button.addEventListener('click', () => {
+            this.List.classList.toggle('show')
+        })
+        Array.from(this.List.children).forEach((child) => {
+            child.addEventListener('click', () => {
+                Audio.Set_Speed(child.innerHTML)
+                this.Button.innerHTML = child.innerHTML
+            })
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.matches('#speed_btn')) {
+                this.List.classList.remove('show')
+            }
+        })
+    }
+}
+var Speed = new Speed_C
 
 // Handle drag and drop
 document.addEventListener('dragover', (e) => {
