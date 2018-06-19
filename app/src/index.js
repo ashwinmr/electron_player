@@ -104,6 +104,7 @@ class Audio_C {
         this.Elem = document.getElementById('audio')
         this.Loaded = false
         this.Looping = false
+        this.Speed = 1
         this.Format_List = [
             '.mp3',
             '.wav',
@@ -128,6 +129,7 @@ class Audio_C {
     Load(file_path) {
         this.Loaded = true
         this.Elem.src = file_path
+        this.Set_Speed(this.Speed)
         this.Play()
     }
 
@@ -216,7 +218,8 @@ class Audio_C {
     }
 
     Set_Speed(rate) {
-        this.Elem.plabackRate = Number(rate)
+        this.Speed = rate
+        this.Elem.playbackRate = rate
     }
 }
 var Audio = new Audio_C
@@ -258,27 +261,23 @@ class Time_C {
 }
 var Time = new Time_C
 
-class Speed_C {
-    constructor() {
-        this.Button = document.getElementById('speed_btn')
-        this.List = document.getElementById('speed_list')
-        this.Button.addEventListener('click', () => {
-            this.List.classList.toggle('show')
-        })
-        Array.from(this.List.children).forEach((child) => {
-            child.addEventListener('click', () => {
-                Audio.Set_Speed(child.innerHTML)
-                this.Button.innerHTML = child.innerHTML
-            })
-        });
-        document.addEventListener('click', (e) => {
-            if (!e.target.matches('#speed_btn')) {
-                this.List.classList.remove('show')
-            }
-        })
+// Handle Speed changes
+let speed_btn = document.getElementById('speed_btn')
+let speed_list = document.getElementById('speed_list')
+speed_btn.addEventListener('click', () => {
+    speed_list.classList.toggle('show')
+})
+Array.from(speed_list.children).forEach((child) => {
+    child.addEventListener('click', () => {
+        Audio.Set_Speed(child.innerHTML)
+        speed_btn.innerHTML = child.innerHTML
+    })
+});
+document.addEventListener('click', (e) => {
+    if (!e.target.matches('#speed_btn')) {
+        speed_list.classList.remove('show')
     }
-}
-var Speed = new Speed_C
+})
 
 // Handle drag and drop
 document.addEventListener('dragover', (e) => {

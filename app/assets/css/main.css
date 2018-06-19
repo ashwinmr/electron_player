@@ -115,6 +115,7 @@ body {
     padding: 0;
     flex-shrink: 0;
     color: black;
+    font: 12px Arial;
 }
 
 #speed_btn::after {
@@ -133,6 +134,7 @@ body {
     width: 300%;
     overflow: auto;
     z-index: 1;
+    font: 12px Arial;
 }
 
 .dropdown_content li {
