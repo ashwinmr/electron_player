@@ -6,6 +6,7 @@ body {
     height: 100%;
     margin: 0;
     background: linear-gradient(#fdfe00, #ffd500);
+    overflow: hidden;
 }
 
 #seek_bar_cnt {
@@ -88,14 +89,14 @@ body {
 }
 
 .toggled:hover {
-    filter: grayscale(0) brightness(4);
+    filter: grayscale(0) brightness(3);
 }
 
 .toggled:active {
     filter: grayscale(0) brightness(1);
 }
 
-#btn_cnt {
+#status {
     width: 100%;
     overflow: hidden;
 }
@@ -104,6 +105,9 @@ body {
     display: block;
     font: 12px Arial;
     float: left;
+    margin-left: 10px;
+    color: gray;
+    cursor: default;
 }
 
 
@@ -111,6 +115,8 @@ body {
 
 #speed {
     float: right;
+    margin-right: 20px;
+    color: grey;
 }
 
 #speed_btn {
@@ -121,8 +127,8 @@ body {
     outline: none;
     padding: 0;
     flex-shrink: 0;
-    color: black;
     font: 12px Arial;
+    color: gray;
 }
 
 #speed_btn::after {
@@ -137,11 +143,12 @@ body {
     display: none;
     position: absolute;
     background-color: transparent;
-    color: black;
     width: 300%;
     overflow: auto;
     z-index: 1;
     font: 12px Arial;
+    color: gray;
+    cursor: pointer;
 }
 
 .dropdown_content li {

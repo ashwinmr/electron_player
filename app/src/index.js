@@ -198,6 +198,14 @@ class Audio_C {
         this.Elem.currentTime = percent / 100 * this.Elem.duration
     }
 
+    Previous() {
+        if (this.Elem.currentTime > 3) {
+            this.Seek_Percent(0)
+        } else {
+            File.Open(File.Get(-1))
+        }
+    }
+
     Seek(direction, increment) {
         if (!Audio.Loaded) {
             return
@@ -270,7 +278,9 @@ speed_btn.addEventListener('click', () => {
 Array.from(speed_list.children).forEach((child) => {
     child.addEventListener('click', () => {
         Audio.Set_Speed(child.innerHTML)
-        speed_btn.innerHTML = child.innerHTML
+        let temp = child.innerHTML
+        child.innerHTML = speed_btn.innerHTML
+        speed_btn.innerHTML = temp
     })
 });
 document.addEventListener('click', (e) => {
@@ -296,7 +306,7 @@ document.getElementById('shuffle_btn').addEventListener('click', (e) => {
     File.Shuffle();
 })
 document.getElementById('previous_btn').addEventListener('click', (e) => {
-    File.Open(File.Get(-1))
+    Audio.Previous();
 })
 document.getElementById('play_pause_btn').addEventListener('click', (e) => {
     Audio.Play_Pause()
@@ -316,7 +326,7 @@ ipcRenderer.on("next", (e) => {
     File.Open(File.Get(+1))
 })
 ipcRenderer.on("previous", (e, file_path) => {
-    File.Open(File.Get(-1))
+    Audio.Previous()
 })
 ipcRenderer.on("play_pause", (e) => {
     Audio.Play_Pause()
