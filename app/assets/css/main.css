@@ -47,10 +47,6 @@ body {
     outline: none;
 }
 
-#time {
-    font-size: 12px;
-}
-
 #btn_bar {
     width: 50%;
     user-select: none;
@@ -99,15 +95,26 @@ body {
     filter: grayscale(0) brightness(1);
 }
 
+#btn_cnt {
+    width: 100%;
+    overflow: hidden;
+}
+
+#time {
+    display: block;
+    font: 12px Arial;
+    float: left;
+}
+
 
 /* Set dropdown for speed */
 
 #speed {
-    position: relative;
-    display: inline-block;
+    float: right;
 }
 
 #speed_btn {
+    display: block;
     background-color: transparent;
     cursor: pointer;
     border: none;

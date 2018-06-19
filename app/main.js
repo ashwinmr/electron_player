@@ -9,7 +9,7 @@ app.on('ready', function createWindow() {
         show: false, // Show and maximize later
         icon: path.join(__dirname, 'assets', 'icons', 'main_icon.ico'),
         resizable: true,
-        width: 450,
+        width: 600,
         height: 150
     })
 
