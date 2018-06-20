@@ -1,6 +1,6 @@
 {
-    "name": "Electron_Amp",
-    "version": "1.0.1",
+    "name": "Electron_Player",
+    "version": "1.0.0",
     "description": "",
     "main": "main.js",
     "scripts": {

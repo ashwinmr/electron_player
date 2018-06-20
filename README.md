@@ -1,6 +1,6 @@
-# Electron Amp
+# Electron Player
 
-A clean music player made in electron
+A clean media player made in electron
 
 ![Screenshot](./screenshots/main.png)
 
