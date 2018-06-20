@@ -1,26 +1,26 @@
 {
-  "name": "app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "package": "electron-packager . --asar --overwrite=true --icon=assets/icons/main_icon.ico",
-    "dist": "electron-builder",
-    "pack": "electron-builder --dir"
-  },
-  "build": {
-    "icon": "assets/icons/main_icon.ico"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "electron": "^2.0.2",
-    "electron-builder": "^20.15.1",
-    "electron-packager": "^12.1.0"
-  },
-  "dependencies": {
-    "trash": "^4.3.0"
-  }
+    "name": "Electron_Amp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "package": "electron-packager . --asar --overwrite=true --icon=assets/icons/main_icon.ico",
+        "dist": "electron-builder",
+        "pack": "electron-builder --dir"
+    },
+    "build": {
+        "icon": "assets/icons/main_icon.ico"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "^2.0.2",
+        "electron-builder": "^20.15.1",
+        "electron-packager": "^12.1.0"
+    },
+    "dependencies": {
+        "trash": "^4.3.0"
+    }
 }
