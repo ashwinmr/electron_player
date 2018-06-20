@@ -1,12 +1,14 @@
-# Electron Template
+# Electron Amp
 
-A template for electron apps
+A clean music player made in electron
 
 ![Screenshot](./screenshots/main.png)
 
 ## Features
 
-- Feature
+- Play, Pause
+- Speed
+- Shuffle, Loop
 
 ## Getting Started
 
@@ -14,8 +16,12 @@ A template for electron apps
 cd app
 npm install
 npm start
+
+or
+
+download from release tab
 ```
 
 ## To-Do
 
-- [ ] Item
+- [ ] Debounce play/pause
