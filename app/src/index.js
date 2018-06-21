@@ -10,11 +10,34 @@ class File_C {
     constructor() {
         this.Opened = false
         this.Shuffling = false
+        this.Video_Formats = [
+            '.mp4',
+            '.webm',
+            '.ogg'
+        ]
+        this.Audio_Formats = [
+            '.mp3',
+            '.wav',
+            '.ogg',
+            '.flac'
+        ]
+        this.Type_List = Object.freeze({
+            Video: 1,
+            Audio: 2
+        })
     }
 
     // Open file and store data
     Open(file_path) {
         if (file_path === undefined) {
+            return
+        }
+        this.Ext = path.extname(file_path.toLowerCase())
+        if (this.Video_Formats.includes(this.Ext)) {
+            this.Type = this.Type_List.Video
+        } else if (this.Audio_Formats.includes(this.Ext)) {
+            this.Type = this.Type_List.Audio
+        } else {
             return
         }
         this.Opened = true
@@ -23,8 +46,8 @@ class File_C {
         this.Index = this.List.indexOf(this.Name)
         document.getElementById('title').innerHTML = this.Name
 
-        // Load the audio
-        Audio.Load(file_path)
+        // Load the media
+        Media.Load(file_path)
     }
 
     // Get the file path
@@ -40,7 +63,7 @@ class File_C {
             return
         }
         let file_list = fs.readdirSync(this.Dir).filter((file) => {
-            return Audio.Format_List.includes(path.extname(file.toLowerCase()))
+            return this.Video_Formats.includes(this.Ext) || this.Audio_Formats.includes(this.Ext)
         })
         return file_list
     }
@@ -49,7 +72,7 @@ class File_C {
         if (!this.Opened) {
             return
         }
-        let cur_file = path.basename(Audio.Elem.src)
+        let cur_file = path.basename(Media.Elem.src)
         if (cur_file === this.Name) {
             trash(File.Path).then(() => {
                 this.Open(this.Get(0, false))
@@ -99,50 +122,64 @@ class File_C {
 }
 var File = new File_C
 
-class Audio_C {
+class Media_C {
 
     constructor() {
-        this.Elem = document.getElementById('audio')
         this.Loaded = false
         this.Looping = false
         this.Speed = 1
-        this.Format_List = [
-            '.mp3',
-            '.wav',
-            '.ogg',
-            '.flac'
-        ]
-        this.Elem.addEventListener('timeupdate', () => {
-            if (this.Elem.currentTime === this.Elem.duration) {
-                if (this.Looping) {
-                    this.Seek_Percent(0)
-                    this.Play()
-                } else {
-                    this.Stop()
-                }
-            } else {
-                Time.Set(this.Elem.currentTime, this.Elem.duration)
-                Seek_Bar.Set(this.Elem.currentTime / this.Elem.duration * 100)
-            }
-        })
+        this.Audio_Elem = document.getElementById('audio')
+        this.Video_Elem = document.getElementById('video')
+        this.Audio_Elem.addEventListener('timeupdate', this.Time_Update)
+        this.Video_Elem.addEventListener('timeupdate', this.Time_Update)
+    }
+
+    get Elem() {
+        if (!File.Opened) {
+            return
+        }
+        if (File.Type == File.Type_List.Video) {
+            return this.Video_Elem
+        } else {
+            return this.Audio_Elem
+        }
     }
 
     Load(file_path) {
-        this.Loaded = true
+        this.Audio_Elem.src = ''
+        this.Video_Elem.src = ''
         this.Elem.src = file_path
+        this.Loaded = true
         this.Set_Speed(this.Speed)
         this.Play()
     }
 
+    Time_Update() {
+        if (!this.Loaded) {
+            return
+        }
+        if (this.Elem.currentTime === this.Elem.duration) {
+            if (this.Looping) {
+                this.Seek_Percent(0)
+                this.Play()
+            } else {
+                this.Stop()
+            }
+        } else {
+            Time.Set(this.Elem.currentTime, this.Elem.duration)
+            Seek_Bar.Set(this.Elem.currentTime / this.Elem.duration * 100)
+        }
+    }
+
     get Playing() {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         return !this.Elem.paused
     }
 
     Loop() {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         if (this.Looping) {
@@ -155,7 +192,7 @@ class Audio_C {
     }
 
     Play() {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         this.Elem.play()
@@ -163,7 +200,7 @@ class Audio_C {
     }
 
     Pause() {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         this.Elem.pause()
@@ -171,7 +208,7 @@ class Audio_C {
     }
 
     Play_Pause() {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         if (this.Playing) {
@@ -182,7 +219,7 @@ class Audio_C {
     }
 
     Stop() {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         this.Pause()
@@ -191,7 +228,7 @@ class Audio_C {
     }
 
     Seek_Percent(percent) {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         percent = percent < 0 ? 0 : percent > 100 ? 100 : percent
@@ -208,7 +245,7 @@ class Audio_C {
     }
 
     Seek(direction, increment) {
-        if (!Audio.Loaded) {
+        if (!this.Loaded) {
             return
         }
         direction = Math.sign(direction)
@@ -231,7 +268,7 @@ class Audio_C {
         this.Elem.playbackRate = rate
     }
 }
-var Audio = new Audio_C
+var Media = new Media_C
 
 class Seek_Bar_C {
 
@@ -239,7 +276,7 @@ class Seek_Bar_C {
         this.Elem = document.getElementById('seek_bar')
         this.Set(0)
         this.Elem.addEventListener('input', () => {
-            Audio.Seek_Percent(this.Elem.value)
+            Media.Seek_Percent(this.Elem.value)
         })
     }
 
@@ -278,7 +315,7 @@ speed_btn.addEventListener('click', () => {
 })
 Array.from(speed_list.children).forEach((child) => {
     child.addEventListener('click', () => {
-        Audio.Set_Speed(child.innerHTML)
+        Media.Set_Speed(child.innerHTML)
         let temp = child.innerHTML
         child.innerHTML = speed_btn.innerHTML
         speed_btn.innerHTML = temp
@@ -291,6 +328,7 @@ document.addEventListener('click', (e) => {
 })
 
 // Handle drag and drop
+/*
 document.addEventListener('dragover', (e) => {
     e.preventDefault();
 })
@@ -301,22 +339,23 @@ document.addEventListener('drop', (e) => {
         File.Open(file.path)
     }
 })
+*/
 
 // Add button shortcuts
 document.getElementById('shuffle_btn').addEventListener('click', (e) => {
     File.Shuffle();
 })
 document.getElementById('previous_btn').addEventListener('click', (e) => {
-    Audio.Previous();
+    Media.Previous();
 })
 document.getElementById('play_pause_btn').addEventListener('click', (e) => {
-    Audio.Play_Pause()
+    Media.Play_Pause()
 })
 document.getElementById('next_btn').addEventListener('click', (e) => {
     File.Open(File.Get(+1))
 })
 document.getElementById('loop_btn').addEventListener('click', (e) => {
-    Audio.Loop()
+    Media.Loop()
 })
 
 // Handle main process events
@@ -327,20 +366,20 @@ ipcRenderer.on("next", (e) => {
     File.Open(File.Get(+1))
 })
 ipcRenderer.on("previous", (e, file_path) => {
-    Audio.Previous()
+    Media.Previous()
 })
 ipcRenderer.on("play_pause", (e) => {
-    Audio.Play_Pause()
+    Media.Play_Pause()
 })
 ipcRenderer.on("seek_plus", (e) => {
-    Audio.Seek(+1)
+    Media.Seek(+1)
 })
 ipcRenderer.on("seek_minus", (e) => {
-    Audio.Seek(-1)
+    Media.Seek(-1)
 })
 ipcRenderer.on("shuffle", (e) => {
     File.Shuffle()
 })
 ipcRenderer.on("loop", (e) => {
-    Audio.Loop()
+    Media.Loop()
 })
