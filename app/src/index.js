@@ -130,8 +130,6 @@ class Media_C {
         this.Speed = 1
         this.Audio_Elem = document.getElementById('audio')
         this.Video_Elem = document.getElementById('video')
-        this.Audio_Elem.addEventListener('timeupdate', this.Time_Update)
-        this.Video_Elem.addEventListener('timeupdate', this.Time_Update)
     }
 
     get Elem() {
@@ -155,7 +153,7 @@ class Media_C {
     }
 
     Time_Update() {
-        if (!this.Loaded) {
+        if (!this.Loaded || !this.Elem.duration) {
             return
         }
         if (this.Elem.currentTime === this.Elem.duration) {
@@ -326,6 +324,10 @@ document.addEventListener('click', (e) => {
         speed_list.classList.remove('show')
     }
 })
+
+// Handle time update
+Media.Audio_Elem.addEventListener('timeupdate', () => { Media.Time_Update() })
+Media.Video_Elem.addEventListener('timeupdate', () => { Media.Time_Update() })
 
 // Handle drag and drop
 /*
