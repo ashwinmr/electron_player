@@ -47,7 +47,11 @@ class File_C {
         document.getElementById('title').innerHTML = this.Name
 
         // Load the media
-        Media.Load(file_path)
+        if (this.Type === this.Type_List.Video) {
+            Media.Load_Video(file_path)
+        } else {
+            Media.Load_Audio(file_path)
+        }
     }
 
     // Get the file path
@@ -132,21 +136,24 @@ class Media_C {
         this.Video_Elem = document.getElementById('video')
     }
 
-    get Elem() {
-        if (!File.Opened) {
-            return
-        }
-        if (File.Type == File.Type_List.Video) {
-            return this.Video_Elem
-        } else {
-            return this.Audio_Elem
-        }
+    Load_Video(file_path) {
+        this.Audio_Elem.src = ''
+        this.Elem = this.Video_Elem
+        this.Elem.src = file_path
+        this.Init()
+        this.Elem.addEventListener("loadedmetadata", (e) => {
+            ipcRenderer.send('min_size', this.Elem.videoWidth, this.Elem.videoHeight)
+        })
     }
 
-    Load(file_path) {
-        this.Audio_Elem.src = ''
+    Load_Audio(file_path) {
         this.Video_Elem.src = ''
+        this.Elem = this.Audio_Elem
         this.Elem.src = file_path
+        this.Init()
+    }
+
+    Init() {
         this.Loaded = true
         this.Set_Speed(this.Speed)
         this.Play()

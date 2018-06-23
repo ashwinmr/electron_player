@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -131,8 +131,13 @@ app.on('ready', function createWindow() {
         // Show and maximize
         win.show()
     })
-})
 
+    // Handle window min size
+    ipcMain.on('min_size', (e, width, height) => {
+        win.setSize(width, height)
+        win.setMinimumSize(width, height)
+    })
+})
 
 
 // Quit when all windows are closed.
