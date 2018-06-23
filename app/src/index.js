@@ -336,7 +336,6 @@ Media.Audio_Elem.addEventListener('timeupdate', () => { Media.Time_Update() })
 Media.Video_Elem.addEventListener('timeupdate', () => { Media.Time_Update() })
 
 // Handle drag and drop
-/*
 document.addEventListener('dragover', (e) => {
     e.preventDefault();
 })
@@ -347,7 +346,6 @@ document.addEventListener('drop', (e) => {
         File.Open(file.path)
     }
 })
-*/
 
 // Add button shortcuts
 document.getElementById('shuffle_btn').addEventListener('click', (e) => {

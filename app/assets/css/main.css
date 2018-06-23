@@ -9,17 +9,19 @@ body {
     overflow: hidden;
 }
 
-#seek_bar_cnt {
-    width: 100%;
-    text-align: center;
-}
+
+/* Setup the seekbar */
 
 #seek_bar {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 50px;
     -webkit-appearance: none;
-    width: 80%;
+    width: 90%;
     height: 5px;
     border-radius: 2px;
-    margin: 15px 0 15px 0;
+    margin: 10px 0 10px 0;
     background: linear-gradient(to right, red 0%, black 0%);
     background-size: 200% 100%;
     background-position: left bottom;
@@ -48,61 +50,11 @@ body {
     outline: none;
 }
 
-#btn_bar {
-    width: 50%;
-    user-select: none;
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translate(-50%);
-    white-space: nowrap;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
 
-.nav_btn {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    height: 30px;
-    width: 30px;
-    filter: grayscale(100%) brightness(2.5);
-    padding: 0;
-    flex-shrink: 0;
-    margin: 0 10px 0 10px;
-}
-
-.nav_btn:hover {
-    filter: grayscale(100%) brightness(3);
-}
-
-.nav_btn:active {
-    filter: grayscale(100%) brightness(1);
-}
-
-.toggled {
-    filter: grayscale(0) brightness(2.5);
-}
-
-.toggled:hover {
-    filter: grayscale(0) brightness(3);
-}
-
-.toggled:active {
-    filter: grayscale(0) brightness(1);
-}
-
-#ui_cnt {
-    width: 100%;
-    overflow: hidden;
-}
+/* Set the time display */
 
 #time {
-    position: absolute;
+    position: fixed;
     display: block;
     font: 12px Arial;
     left: 10px;
@@ -115,7 +67,7 @@ body {
 /* Set dropdown for speed */
 
 #speed_cnt {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
     color: gray;
@@ -170,6 +122,57 @@ body {
 }
 
 
+/* Setup the ui buttons */
+
+#btn_bar {
+    width: 100px;
+    user-select: none;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%);
+    white-space: nowrap;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nav_btn {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    height: 25px;
+    width: 25px;
+    filter: grayscale(100%) brightness(2.5);
+    padding: 0;
+    flex-shrink: 0;
+    margin: 0 10px 0 10px;
+}
+
+.nav_btn:hover {
+    filter: grayscale(100%) brightness(3);
+}
+
+.nav_btn:active {
+    filter: grayscale(100%) brightness(1);
+}
+
+.toggled {
+    filter: grayscale(0) brightness(2.5);
+}
+
+.toggled:hover {
+    filter: grayscale(0) brightness(3);
+}
+
+.toggled:active {
+    filter: grayscale(0) brightness(1);
+}
+
+
 /* Set image for each button */
 
 #shuffle_btn {
@@ -183,8 +186,8 @@ body {
 
 #play_pause_btn {
     background-image: url(../ui/play_btn.svg);
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
 }
 
 #next_btn {
