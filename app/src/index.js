@@ -263,6 +263,9 @@ class Media_C {
 
     Set_Speed(rate) {
         this.Speed = rate
+        if (!this.Loaded) {
+            return
+        }
         this.Elem.playbackRate = rate
     }
 }
