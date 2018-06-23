@@ -273,6 +273,9 @@ class Seek_Bar_C {
     constructor() {
         this.Elem = document.getElementById('seek_bar')
         this.Set(0)
+        this.Elem.addEventListener('focus', () => {
+            this.Elem.blur() // Prevent focus that takes keybaord input
+        })
         this.Elem.addEventListener('input', () => {
             Media.Seek_Percent(this.Elem.value)
         })
@@ -281,7 +284,7 @@ class Seek_Bar_C {
     Set(percent) {
         // Limit val between 0 and 1
         percent = percent < 0 ? 0 : percent > 100 ? 100 : percent
-        percent = Math.round(percent)
+        percent = Math.round(percent * 10) / 10
         this.Elem.style.setProperty('background', 'linear-gradient(to right, red ' + percent + '%, black ' + percent + '%')
         this.Elem.value = percent
     }
