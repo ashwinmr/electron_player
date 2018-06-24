@@ -4,9 +4,23 @@ const url = require('url')
 const trash = require('trash')
 const fs = require('fs')
 
-// Globals
-const UI_Height = 68
-const UI_Min_Width = 450
+// Create oject to handle UI
+class UI_C {
+    constructor() {
+        this.Elem = document.getElementById('ui_cnt')
+        this.Min_Height = 68
+        this.Min_Width = 450
+    }
+
+    get Height() {
+        if (window.innerHeight == screen.height - 20 && window.innerWidth == screen.width) {
+            return 0
+        } else {
+            return this.Min_Height
+        }
+    }
+}
+var UI = new UI_C
 
 // Create object to handle file
 class File_C {
@@ -140,6 +154,7 @@ class Media_C {
         this.Video_Elem = document.getElementById('video')
         this.Video_Elem.addEventListener("loadedmetadata", (e) => {
             this.Resize_Window()
+            this.Resize_Video()
         })
     }
 
@@ -149,8 +164,8 @@ class Media_C {
         let ratio = this.Video_Elem.videoWidth / this.Video_Elem.videoHeight
         let width = window_width
         let height = width / ratio
-        if (window_height < height + UI_Height) {
-            ipcRenderer.send('resize_window', width, height + UI_Height)
+        if (window_height < height + UI.Height) {
+            ipcRenderer.send('resize_window', width, height + UI.Height)
         }
     }
 
@@ -160,13 +175,13 @@ class Media_C {
         let ratio = this.Video_Elem.videoWidth / this.Video_Elem.videoHeight
         let width = window_width
         let height = width / ratio
-        if (window_height < height + UI_Height) {
-            height = window_height - UI_Height
+        if (window_height < height + UI.Height) {
+            height = window_height - UI.Height
             width = height * ratio
         }
         this.Video_Elem.width = width
         this.Video_Elem.height = height
-        this.Video_Elem.style.transform = 'translate(' + ((window_width - width) / 2) + 'px,' + ((window_height - height - UI_Height) / 2) + 'px)'
+        this.Video_Elem.style.transform = 'translate(' + ((window_width - width) / 2) + 'px,' + ((window_height - height - UI.Height) / 2) + 'px)'
     }
 
     Load_Video(file_path) {
@@ -371,10 +386,9 @@ document.addEventListener('click', (e) => {
     }
 })
 
-
 // Set UI size on start
-document.getElementById('ui_cnt').style.height = (UI_Height - 2) + 'px'
-ipcRenderer.send('init_size', UI_Min_Width, UI_Height)
+document.getElementById('ui_cnt').style.height = (UI.Min_Height - 2) + 'px'
+ipcRenderer.send('init_size', UI.Min_Width, UI.Min_Height)
 
 // Handle window resize
 window.addEventListener('resize', () => { Media.Resize_Video() })

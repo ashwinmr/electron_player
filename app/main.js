@@ -101,6 +101,24 @@ app.on('ready', function createWindow() {
             ]
         },
         {
+            label: 'View',
+            submenu: [{
+                    label: 'Toggle Fullscreen',
+                    accelerator: 'f',
+                    click() {
+                        win.setFullScreen(!win.isFullScreen())
+                    }
+                },
+                {
+                    label: 'Exit Fullscreen',
+                    accelerator: 'esc',
+                    click() {
+                        win.setFullScreen(false)
+                    }
+                }
+            ]
+        },
+        {
             label: 'Help',
             // Allow opening browser dev tool
             submenu: [{
@@ -139,8 +157,7 @@ app.on('ready', function createWindow() {
 
     // Handle window resize
     ipcMain.on('resize_window', (e, width, height) => {
-        if (win.isMaximized()) {
-            win.webContents.send('resize_video')
+        if (win.isMaximized() || win.isFullScreen()) {
             return
         }
         width = Math.round(width)
