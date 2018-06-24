@@ -106,7 +106,13 @@ app.on('ready', function createWindow() {
                     label: 'Toggle Fullscreen',
                     accelerator: 'f',
                     click() {
-                        win.setFullScreen(!win.isFullScreen())
+                        if (win.isFullScreen()) {
+                            win.setFullScreen(false)
+                            win.webContents.send('set_fullscreen', false)
+                        } else {
+                            win.setFullScreen(true)
+                            win.webContents.send('set_fullscreen', true)
+                        }
                     }
                 },
                 {
@@ -114,6 +120,7 @@ app.on('ready', function createWindow() {
                     accelerator: 'esc',
                     click() {
                         win.setFullScreen(false)
+                        win.webContents.send('set_fullscreen', false)
                     }
                 }
             ]

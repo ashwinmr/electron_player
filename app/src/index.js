@@ -10,6 +10,9 @@ class UI_C {
         this.Elem = document.getElementById('ui_cnt')
         this.Min_Height = 68
         this.Min_Width = 450
+        ipcRenderer.on('set_fullscreen', (e, state) => {
+            this.Set_Fullscreen(state)
+        })
     }
 
     get Height() {
@@ -17,6 +20,14 @@ class UI_C {
             return 0
         } else {
             return this.Min_Height
+        }
+    }
+
+    Set_Fullscreen(state) {
+        if (state) {
+            this.Elem.classList.add('hide')
+        } else {
+            this.Elem.classList.remove('hide')
         }
     }
 }
