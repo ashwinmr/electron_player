@@ -149,8 +149,8 @@ class Media_C {
         let ratio = this.Video_Elem.videoWidth / this.Video_Elem.videoHeight
         let width = window_width
         let height = width / ratio
-        if (height > window_height - UI_Height) {
-            ipcRenderer.send('resize_window', width, height)
+        if (window_height < height + UI_Height) {
+            ipcRenderer.send('resize_window', width, height + UI_Height)
         }
     }
 
@@ -160,7 +160,7 @@ class Media_C {
         let ratio = this.Video_Elem.videoWidth / this.Video_Elem.videoHeight
         let width = window_width
         let height = width / ratio
-        if (height > window_height - UI_Height) {
+        if (window_height < height + UI_Height) {
             height = window_height - UI_Height
             width = height * ratio
         }
