@@ -9,7 +9,7 @@ class UI_C {
     constructor() {
         this.Elem = document.getElementById('ui_cnt')
         this.Min_Height = 68
-        this.Min_Width = 450
+        this.Min_Width = 600
         ipcRenderer.on('set_fullscreen', (e, state) => {
             this.Set_Fullscreen(state)
         })
