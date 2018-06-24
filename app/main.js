@@ -131,8 +131,21 @@ app.on('ready', function createWindow() {
 
     // Handle window min size
     ipcMain.on('init_size', (e, width, height) => {
+        width = Math.round(width)
+        height = Math.round(height)
         win.setContentSize(width, height - 1)
         win.setMinimumSize(win.getSize()[0], win.getSize()[1] + 20)
+    })
+
+    // Handle window resize
+    ipcMain.on('resize_window', (e, width, height) => {
+        if (win.isMaximized()) {
+            win.webContents.send('resize_video')
+            return
+        }
+        width = Math.round(width)
+        height = Math.round(height)
+        win.setContentSize(width, height)
     })
 })
 

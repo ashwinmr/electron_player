@@ -139,11 +139,22 @@ class Media_C {
         this.Audio_Elem = document.getElementById('audio')
         this.Video_Elem = document.getElementById('video')
         this.Video_Elem.addEventListener("loadedmetadata", (e) => {
-            this.Resize()
+            this.Resize_Window()
         })
     }
 
-    Resize() {
+    Resize_Window() {
+        let window_width = window.innerWidth
+        let window_height = window.innerHeight
+        let ratio = this.Video_Elem.videoWidth / this.Video_Elem.videoHeight
+        let width = window_width
+        let height = width / ratio
+        if (height > window_height - UI_Height) {
+            ipcRenderer.send('resize_window', width, height)
+        }
+    }
+
+    Resize_Video() {
         let window_width = window.innerWidth
         let window_height = window.innerHeight
         let ratio = this.Video_Elem.videoWidth / this.Video_Elem.videoHeight
@@ -171,6 +182,7 @@ class Media_C {
         this.Video_Elem.height = 0
         this.Elem = this.Audio_Elem
         this.Elem.src = file_path
+        ipcRenderer.send('resize_window', window.innerWidth, 0)
         this.Init()
     }
 
@@ -365,7 +377,10 @@ document.getElementById('ui_cnt').style.height = (UI_Height - 2) + 'px'
 ipcRenderer.send('init_size', UI_Min_Width, UI_Height)
 
 // Handle window resize
-window.addEventListener('resize', () => { Media.Resize() })
+window.addEventListener('resize', () => { Media.Resize_Video() })
+
+// Handle video resize
+ipcRenderer.on('resize_video', () => { Media.Resize_Video() })
 
 
 // Handle time update
