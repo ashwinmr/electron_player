@@ -4,6 +4,10 @@ const url = require('url')
 const trash = require('trash')
 const fs = require('fs')
 
+// Globals
+const UI_Height = 68
+const UI_Min_Width = 450
+
 // Create object to handle file
 class File_C {
 
@@ -135,10 +139,23 @@ class Media_C {
         this.Audio_Elem = document.getElementById('audio')
         this.Video_Elem = document.getElementById('video')
         this.Video_Elem.addEventListener("loadedmetadata", (e) => {
-            this.Video_Elem.width = this.Video_Elem.videoWidth
-            this.Video_Elem.height = this.Video_Elem.videoHeight
-            ipcRenderer.send('min_size', this.Video_Elem.videoWidth, this.Video_Elem.videoHeight)
+            this.Resize()
         })
+    }
+
+    Resize() {
+        let window_width = window.innerWidth
+        let window_height = window.innerHeight
+        let ratio = this.Video_Elem.videoWidth / this.Video_Elem.videoHeight
+        let width = window_width
+        let height = width / ratio
+        if (height > window_height - UI_Height) {
+            height = window_height - UI_Height
+            width = height * ratio
+        }
+        this.Video_Elem.width = width
+        this.Video_Elem.height = height
+        this.Video_Elem.style.transform = 'translate(' + ((window_width - width) / 2) + 'px,' + ((window_height - height - UI_Height) / 2) + 'px)'
     }
 
     Load_Video(file_path) {
@@ -341,6 +358,15 @@ document.addEventListener('click', (e) => {
         speed_list.classList.remove('show')
     }
 })
+
+
+// Set UI size on start
+document.getElementById('ui_cnt').style.height = (UI_Height - 2) + 'px'
+ipcRenderer.send('init_size', UI_Min_Width, UI_Height)
+
+// Handle window resize
+window.addEventListener('resize', () => { Media.Resize() })
+
 
 // Handle time update
 Media.Audio_Elem.addEventListener('timeupdate', () => { Media.Time_Update() })

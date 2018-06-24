@@ -1,27 +1,32 @@
-﻿html {}
+﻿html {
+    height: 100%;
+}
 
 body {
+    height: 100%;
     margin: 0;
-    background: linear-gradient(#fdfe00, #ffd500);
-    background-repeat: no-repeat;
     overflow: hidden;
+    background: black;
 }
 
 
 /* Setup video */
 
-video {
+#video {
     display: block;
+    position: absolute;
 }
 
 
 /* Setup ui container */
 
 #ui_cnt {
+    position: fixed;
+    bottom: 0;
     overflow: hidden;
     width: 100%;
-    height: 66px;
     padding: 1px;
+    background: linear-gradient(#fdfe00, #ffd500);
     /* Prevent margin collapsing of child */
 }
 

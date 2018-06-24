@@ -9,9 +9,6 @@ app.on('ready', function createWindow() {
         show: false, // Show and maximize later
         icon: path.join(__dirname, 'assets', 'icons', 'main_icon.ico'),
         resizable: true,
-        width: 450,
-        height: 500,
-        minWidth: 450
     })
 
     // Load the index.html of the app.
@@ -133,9 +130,9 @@ app.on('ready', function createWindow() {
     })
 
     // Handle window min size
-    ipcMain.on('min_size', (e, width, height) => {
-        win.setSize(width, height)
-        win.setMinimumSize(width, height)
+    ipcMain.on('init_size', (e, width, height) => {
+        win.setContentSize(width, height - 1)
+        win.setMinimumSize(win.getSize()[0], win.getSize()[1] + 20)
     })
 })
 
