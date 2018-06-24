@@ -1,20 +1,28 @@
-﻿html {
-    height: 100%;
-}
+﻿html {}
 
 body {
-    height: 100%;
     margin: 0;
     background: linear-gradient(#fdfe00, #ffd500);
+    background-repeat: no-repeat;
     overflow: hidden;
+}
+
+
+/* Setup video */
+
+video {
+    display: block;
 }
 
 
 /* Setup ui container */
 
 #ui_cnt {
-    overflow: visible;
+    overflow: hidden;
     width: 100%;
+    height: 66px;
+    padding: 1px;
+    /* Prevent margin collapsing of child */
 }
 
 
@@ -29,7 +37,7 @@ body {
     width: 90%;
     height: 5px;
     border-radius: 2px;
-    margin: 5px 0 5px 0;
+    margin: 10px 0 10px 0;
     background: linear-gradient(to right, red 0%, black 0%);
     background-size: 200% 100%;
     background-position: left bottom;
@@ -65,7 +73,7 @@ body {
     position: relative;
     display: inline-block;
     font: 12px Arial;
-    margin: 5px;
+    margin-left: 10px;
     color: gray;
     cursor: default;
 }
@@ -76,14 +84,14 @@ body {
 #speed_cnt {
     position: relative;
     display: inline-block;
-    float: right;
     font: 12px Arial;
-    margin: 5px;
+    margin-right: 10px;
     color: gray;
+    float: right;
 }
 
 #speed_btn {
-    display: block;
+    display: inline-block;
     background-color: transparent;
     cursor: pointer;
     border: none;
@@ -103,16 +111,18 @@ body {
 
 .dropdown_content {
     display: none;
-    position: absolute;
+    position: relative;
     background-color: transparent;
-    width: 300%;
-    overflow: auto;
     z-index: 1;
     cursor: pointer;
 }
 
+.show {
+    display: inline-block;
+}
+
 .dropdown_content li {
-    display: block;
+    display: inline-block;
 }
 
 .dropdown_content li::after {
@@ -121,10 +131,6 @@ body {
 
 .dropdown_content li:hover {
     color: red;
-}
-
-.show {
-    display: block;
 }
 
 
@@ -181,7 +187,7 @@ body {
 /* Set image for each button */
 
 #shuffle_btn {
-    margin-right: 30px;
+    margin-right: 20px;
     background-image: url(../ui/shuffle_btn.svg);
 }
 
@@ -200,6 +206,6 @@ body {
 }
 
 #loop_btn {
-    margin-left: 30px;
+    margin-left: 20px;
     background-image: url(../ui/loop_btn.svg);
 }

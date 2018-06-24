@@ -134,6 +134,11 @@ class Media_C {
         this.Speed = 1
         this.Audio_Elem = document.getElementById('audio')
         this.Video_Elem = document.getElementById('video')
+        this.Video_Elem.addEventListener("loadedmetadata", (e) => {
+            this.Video_Elem.width = this.Video_Elem.videoWidth
+            this.Video_Elem.height = this.Video_Elem.videoHeight
+            ipcRenderer.send('min_size', this.Video_Elem.videoWidth, this.Video_Elem.videoHeight)
+        })
     }
 
     Load_Video(file_path) {
@@ -141,13 +146,12 @@ class Media_C {
         this.Elem = this.Video_Elem
         this.Elem.src = file_path
         this.Init()
-        this.Elem.addEventListener("loadedmetadata", (e) => {
-            ipcRenderer.send('min_size', this.Elem.videoWidth, this.Elem.videoHeight)
-        })
     }
 
     Load_Audio(file_path) {
         this.Video_Elem.src = ''
+        this.Video_Elem.width = 0
+        this.Video_Elem.height = 0
         this.Elem = this.Audio_Elem
         this.Elem.src = file_path
         this.Init()
