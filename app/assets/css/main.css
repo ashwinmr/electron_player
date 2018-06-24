@@ -10,18 +10,26 @@ body {
 }
 
 
+/* Setup ui container */
+
+#ui_cnt {
+    overflow: visible;
+    width: 100%;
+}
+
+
 /* Setup the seekbar */
 
 #seek_bar {
-    position: fixed;
+    -webkit-appearance: none;
+    position: relative;
+    display: block;
     left: 50%;
     transform: translate(-50%);
-    bottom: 50px;
-    -webkit-appearance: none;
     width: 90%;
     height: 5px;
     border-radius: 2px;
-    margin: 10px 0 10px 0;
+    margin: 5px 0 5px 0;
     background: linear-gradient(to right, red 0%, black 0%);
     background-size: 200% 100%;
     background-position: left bottom;
@@ -54,11 +62,10 @@ body {
 /* Set the time display */
 
 #time {
-    position: fixed;
-    display: block;
+    position: relative;
+    display: inline-block;
     font: 12px Arial;
-    left: 10px;
-    bottom: 10px;
+    margin: 5px;
     color: gray;
     cursor: default;
 }
@@ -67,11 +74,12 @@ body {
 /* Set dropdown for speed */
 
 #speed_cnt {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    color: gray;
+    position: relative;
+    display: inline-block;
+    float: right;
     font: 12px Arial;
+    margin: 5px;
+    color: gray;
 }
 
 #speed_btn {
@@ -81,7 +89,6 @@ body {
     border: none;
     outline: none;
     padding: 0;
-    flex-shrink: 0;
     font: 12px Arial;
     color: gray;
 }
@@ -97,7 +104,6 @@ body {
 .dropdown_content {
     display: none;
     position: absolute;
-    bottom: 100%;
     background-color: transparent;
     width: 300%;
     overflow: auto;
@@ -125,14 +131,13 @@ body {
 /* Setup the ui buttons */
 
 #btn_bar {
-    width: 100px;
-    user-select: none;
-    position: fixed;
-    bottom: 10px;
+    display: inline-flex;
+    position: absolute;
     left: 50%;
     transform: translate(-50%);
+    width: 100px;
+    user-select: none;
     white-space: nowrap;
-    display: flex;
     justify-content: space-evenly;
     align-items: center;
 }

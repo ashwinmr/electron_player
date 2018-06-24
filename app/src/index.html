@@ -12,23 +12,25 @@
     <video id="video"></video>
     <audio id="audio"></audio>
 
-    <input id='seek_bar' type="range" step="0.1">
+    <div id="ui_cnt">
+        <input id='seek_bar' type="range" step="0.1">
 
-    <div id="btn_bar">
-        <button class="nav_btn" id="shuffle_btn"></button>
-        <button class="nav_btn" id="previous_btn"></button>
-        <button class="nav_btn" id="play_pause_btn"></button>
-        <button class="nav_btn" id="next_btn"></button>
-        <button class="nav_btn" id="loop_btn"></button>
-    </div>
+        <span id='time'>0:00/0:00</span>
 
-    <span id='time'>0:00/0:00</span>
+        <div id="btn_bar">
+            <button class="nav_btn" id="shuffle_btn"></button>
+            <button class="nav_btn" id="previous_btn"></button>
+            <button class="nav_btn" id="play_pause_btn"></button>
+            <button class="nav_btn" id="next_btn"></button>
+            <button class="nav_btn" id="loop_btn"></button>
+        </div>
 
-    <div id="speed_cnt">
-        <button id="speed_btn">1.0</button>
-        <div id="speed_list" class="dropdown_content">
-            <li>0.5</li>
-            <li>0.8</li>
+        <div id="speed_cnt">
+            <button id="speed_btn">1.0</button>
+            <div id="speed_list" class="dropdown_content">
+                <li>0.5</li>
+                <li>0.8</li>
+            </div>
         </div>
     </div>
 
