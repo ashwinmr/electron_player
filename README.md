@@ -2,8 +2,8 @@
 
 A clean media player made in electron
 
-![Screenshot](./screenshots/sc_1.png)
 ![Screenshot](./screenshots/sc_2.png)
+![Screenshot](./screenshots/sc_1.png)
 
 ## Features
 
